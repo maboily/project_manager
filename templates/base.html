@@ -6,9 +6,10 @@
 <body>
     <nav>
         <ul class="menu">
-            <li class="menu-item"><a href="/">Home</a></li>
-            <li class="menu-item"><a href="/projects/">Projects</a></li>
-            <li class="menu-item"><a href="/logout/">Logout</a></li>
+            {% if user.is_authenticated %}
+                <li class="menu-item"><a href="/projects/">Projects</a></li>
+                <li class="menu-item"><a href="/logout/">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
 
