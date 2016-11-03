@@ -54,3 +54,20 @@ def add_project(request):
         form = ProjectForm()
 
     return render(request, 'projects/add.html', {'form': form})
+
+
+@login_required
+def edit_project(request, project_id):
+    project = Project.objects.get(pk=project_id)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+
+        if form.is_valid():
+            form.save()
+
+        return HttpResponseRedirect('/projects/')
+    else:
+        form = ProjectForm(instance=project)
+
+    return render(request, 'projects/edit.html', {'form': form})
