@@ -1,15 +1,18 @@
-from django.contrib.auth import login
+from django.conf import settings
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 
 
 # Create your views here.
 
 
 def home(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+    elif request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
 
         if form.is_valid():
@@ -19,7 +22,14 @@ def home(request):
     else:
         form = AuthenticationForm()
 
-    return render_to_response('login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
+
+
+@login_required
+def do_logout(request):
+    logout(request)
+
+    return HttpResponseRedirect('/')
 
 
 @login_required
