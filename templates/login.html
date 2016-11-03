@@ -3,4 +3,13 @@
 {% block content %}
     <h1>Login</h1>
 
+    <form action="/" method="POST">
+        {% csrf_token %}
+
+        {{ form.username.errors }}
+
+        {{ form.as_p }}
+
+        <button type="submit">Login</button>
+    </form>
 {% endblock %}

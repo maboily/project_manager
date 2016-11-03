@@ -4,4 +4,5 @@ from project_manager_web import views
 
 urlpatterns = [
     url(r'^$', views.home),
+    url(r'^projects/$', views.projects)
 ]
