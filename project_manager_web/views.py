@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response, render
 
 # Create your views here.
 from project_manager_web.forms import ProjectForm
+from project_manager_web.models import Project
 
 
 def home(request):
@@ -35,7 +36,9 @@ def do_logout(request):
 
 @login_required
 def projects(request):
-    return render(request, 'projects/index.html')
+    projects = Project.objects.all
+
+    return render(request, 'projects/index.html', {'projects': projects})
 
 
 @login_required
