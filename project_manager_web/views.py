@@ -57,6 +57,13 @@ def add_project(request):
 
 
 @login_required
+def view_project(request, project_id):
+    project = Project.objects.get(pk=project_id)
+
+    return render(request, 'projects/view.html', {'project': project})
+
+
+@login_required
 def edit_project(request, project_id):
     project = Project.objects.get(pk=project_id)
 

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Project - {{ project.name }}</h1>
+
+    <a href="/projects/{{ project.id }}/edit/">Edit</a>
+
+    <p>{{ project.description }}</p>
+
+    <div>
+        <p>Status: {{ project.status }}</p>
+        <p>Start date: {{ project.start_date }}</p>
+        <p>End date: {{ project.end_date }}</p>
+    </div>
+{% endblock %}
