@@ -12,4 +12,4 @@ class ProjectForm(forms.ModelForm):
 class ProjectProgressForm(forms.ModelForm):
     class Meta:
         model = ProjectProgress
-        fields = ['notification_text']
+        fields = ['notification_text', 'date']

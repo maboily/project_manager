@@ -39,3 +39,4 @@ class Project(TimestampedModel):
 class ProjectProgress(TimestampedModel):
     notification_text = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    date = models.DateField()
