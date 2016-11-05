@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">
+        {% block form_header %}{% endblock %}
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% block form_footer %}{% endblock %}
+    </form>
+{% endblock %}

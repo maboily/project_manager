@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^projects/add/$', views.add_project),
     url(r'^projects/(?P<project_id>\w+)/$', views.view_project),
     url(r'^projects/(?P<project_id>\w+)/edit/$', views.edit_project),
+    url(r'^projects/(?P<project_id>\w+)/progresses/add', views.add_project_progress),
     url(r'^logout/$', views.do_logout)
 ]

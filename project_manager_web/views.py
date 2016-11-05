@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render
 
 
 # Create your views here.
-from project_manager_web.forms import ProjectForm
+from project_manager_web.forms import ProjectForm, ProjectProgressForm
 from project_manager_web.models import Project
 
 
@@ -49,7 +49,7 @@ def add_project(request):
         if form.is_valid():
             form.save()
 
-        return HttpResponseRedirect('/projects/')
+            return HttpResponseRedirect('/projects/')
     else:
         form = ProjectForm()
 
@@ -59,8 +59,9 @@ def add_project(request):
 @login_required
 def view_project(request, project_id):
     project = Project.objects.get(pk=project_id)
+    project_progresses = project.projectprogress_set.all()
 
-    return render(request, 'projects/view.html', {'project': project})
+    return render(request, 'projects/view.html', {'project': project, 'project_progresses': project_progresses})
 
 
 @login_required
@@ -73,8 +74,25 @@ def edit_project(request, project_id):
         if form.is_valid():
             form.save()
 
-        return HttpResponseRedirect('/projects/')
+            return HttpResponseRedirect('/projects/')
     else:
         form = ProjectForm(instance=project)
 
     return render(request, 'projects/edit.html', {'form': form})
+
+
+@login_required
+def add_project_progress(request, project_id):
+    if request.method == 'POST':
+        form = ProjectProgressForm(request.POST)
+
+        if form.is_valid():
+            project_progress_instance = form.save(commit=False)
+            project_progress_instance.project_id = project_id
+            project_progress_instance.save()
+
+            return HttpResponseRedirect('/projects/' + project_id + '/')
+    else:
+        form = ProjectProgressForm()
+
+    return render(request, 'projects/progresses/edit.html', {'form': form})

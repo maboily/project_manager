@@ -12,4 +12,26 @@
         <p>Start date: {{ project.start_date }}</p>
         <p>End date: {{ project.end_date }}</p>
     </div>
+
+    <h2>Activities</h2>
+
+    <a href="/projects/{{ project.id }}/progresses/add/">Add new progress</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Notification text</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for project_progress in project_progresses %}
+                <tr>
+                    <td>{{ project_progress.notification_text }}</td>
+                    <td>&nbsp;</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
