@@ -29,7 +29,7 @@
             {% for project_progress in project_progresses %}
                 <tr>
                     <td>{{ project_progress.notification_text }}</td>
-                    <td>&nbsp;</td>
+                    <td><a href="/projects/{{ project.id }}/progresses/edit/{{ project_progress.id }}/">Edit</a></td>
                 </tr>
             {% endfor %}
         </tbody>

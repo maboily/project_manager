@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response, render
 
 # Create your views here.
 from project_manager_web.forms import ProjectForm, ProjectProgressForm
-from project_manager_web.models import Project
+from project_manager_web.models import Project, ProjectProgress
 
 
 def home(request):
@@ -94,5 +94,22 @@ def add_project_progress(request, project_id):
             return HttpResponseRedirect('/projects/' + project_id + '/')
     else:
         form = ProjectProgressForm()
+
+    return render(request, 'projects/progresses/add.html', {'form': form})
+
+
+@login_required
+def edit_project_progress(request, project_id, project_progress_id):
+    project_progress = ProjectProgress.objects.get(pk=project_progress_id)
+
+    if request.method == 'POST':
+        form = ProjectProgressForm(request.POST, instance=project_progress)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('/projects/' + project_id + '/')
+    else:
+        form = ProjectProgressForm(instance=project_progress)
 
     return render(request, 'projects/progresses/edit.html', {'form': form})
