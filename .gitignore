@@ -3,3 +3,6 @@
 
 # Django files
 db.sqlite3
+
+# Assets
+**/static/app.css

@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 
 from project_manager_web import views
 
@@ -17,4 +19,4 @@ urlpatterns = [
     url(r'^projects/delete/(?P<project_id>\w+)/$', views.delete_project, name='projects.delete'),
     url(r'^projects/edit/(?P<project_id>\w+)/$', views.edit_project, name='projects.edit'),
     url(r'^logout/$', views.do_logout, name='logout')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
