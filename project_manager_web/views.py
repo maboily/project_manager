@@ -53,6 +53,7 @@ def add_project(request):
     else:
         form = ProjectForm()
 
+    # ToDo: Flash message
     return render(request, 'projects/add.html', {'form': form})
 
 
@@ -65,6 +66,14 @@ def view_project(request, project_id):
 
 
 @login_required
+def delete_project(request, project_id):
+    Project.objects.filter(id=project_id).delete()
+
+    # ToDo: Flash message
+    return HttpResponseRedirect('/projects/')
+
+
+@login_required
 def edit_project(request, project_id):
     project = Project.objects.get(pk=project_id)
 
@@ -74,6 +83,7 @@ def edit_project(request, project_id):
         if form.is_valid():
             form.save()
 
+            # ToDo: Flash message
             return HttpResponseRedirect('/projects/')
     else:
         form = ProjectForm(instance=project)
@@ -91,11 +101,20 @@ def add_project_progress(request, project_id):
             project_progress_instance.project_id = project_id
             project_progress_instance.save()
 
+            # ToDo: Flash message
             return HttpResponseRedirect('/projects/' + project_id + '/')
     else:
         form = ProjectProgressForm()
 
     return render(request, 'projects/progresses/add.html', {'form': form})
+
+
+@login_required
+def delete_project_progress(request, project_id, project_progress_id):
+    ProjectProgress.objects.filter(id=project_progress_id, project_id=project_id).delete()
+
+    # ToDo: Flash message
+    return HttpResponseRedirect('/projects/' + project_id + '/')
 
 
 @login_required
@@ -108,6 +127,7 @@ def edit_project_progress(request, project_id, project_progress_id):
         if form.is_valid():
             form.save()
 
+            # ToDo: Flash message
             return HttpResponseRedirect('/projects/' + project_id + '/')
     else:
         form = ProjectProgressForm(instance=project_progress)

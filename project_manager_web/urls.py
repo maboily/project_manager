@@ -7,8 +7,10 @@ urlpatterns = [
     url(r'^projects/$', views.projects),
     url(r'^projects/add/$', views.add_project),
     url(r'^projects/(?P<project_id>\w+)/$', views.view_project),
-    url(r'^projects/(?P<project_id>\w+)/edit/$', views.edit_project),
+    url(r'^projects/delete/(?P<project_id>\w+)/$', views.delete_project),
+    url(r'^projects/edit/(?P<project_id>\w+)/$', views.edit_project),
     url(r'^projects/(?P<project_id>\w+)/progresses/add', views.add_project_progress),
+    url(r'^projects/(?P<project_id>\w+)/progresses/delete/(?P<project_progress_id>\w+)', views.delete_project_progress),
     url(r'^projects/(?P<project_id>\w+)/progresses/edit/(?P<project_progress_id>\w+)', views.edit_project_progress),
     url(r'^logout/$', views.do_logout)
 ]

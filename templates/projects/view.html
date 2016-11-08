@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Project - {{ project.name }}</h1>
 
-    <a href="/projects/{{ project.id }}/edit/">Edit</a>
+    <a href="/projects/edit/{{ project.id }}/">Edit</a>
 
     <p>{{ project.description }}</p>
 
@@ -13,7 +13,7 @@
         <p>End date: {{ project.end_date }}</p>
     </div>
 
-    <h2>Activities</h2>
+    <h2>Activity</h2>
 
     <a href="/projects/{{ project.id }}/progresses/add/">Add new progress</a>
 
@@ -21,6 +21,7 @@
         <thead>
             <tr>
                 <th>Notification text</th>
+                <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,7 +30,11 @@
             {% for project_progress in project_progresses %}
                 <tr>
                     <td>{{ project_progress.notification_text }}</td>
-                    <td><a href="/projects/{{ project.id }}/progresses/edit/{{ project_progress.id }}/">Edit</a></td>
+                    <td>{{ project_progress.date }}</td>
+                    <td>
+                        <a href="/projects/{{ project.id }}/progresses/edit/{{ project_progress.id }}/">Edit</a>
+                        <a href="/projects/{{ project.id }}/progresses/delete/{{ project_progress.id }}/">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
