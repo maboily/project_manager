@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -47,13 +48,13 @@ def add_project(request):
         form = ProjectForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            new_project = form.save()
 
+            messages.add_message(request, messages.INFO, "Project '" + new_project.name + "' added.")
             return HttpResponseRedirect('/projects/')
     else:
         form = ProjectForm()
 
-    # ToDo: Flash message
     return render(request, 'projects/add.html', {'form': form})
 
 
@@ -67,9 +68,10 @@ def view_project(request, project_id):
 
 @login_required
 def delete_project(request, project_id):
-    Project.objects.filter(id=project_id).delete()
+    project_to_delete = Project.objects.get(pk=project_id)
+    project_to_delete.delete()
 
-    # ToDo: Flash message
+    messages.add_message(request, messages.INFO, "Project '" + project_to_delete.name + "' deleted.")
     return HttpResponseRedirect('/projects/')
 
 
@@ -83,7 +85,7 @@ def edit_project(request, project_id):
         if form.is_valid():
             form.save()
 
-            # ToDo: Flash message
+            messages.add_message(request, messages.INFO, "Project '" + project.name + "' saved.")
             return HttpResponseRedirect('/projects/')
     else:
         form = ProjectForm(instance=project)
@@ -101,7 +103,7 @@ def add_project_progress(request, project_id):
             project_progress_instance.project_id = project_id
             project_progress_instance.save()
 
-            # ToDo: Flash message
+            messages.add_message(request, messages.INFO, "New project progress added successfully.")
             return HttpResponseRedirect('/projects/' + project_id + '/')
     else:
         form = ProjectProgressForm()
@@ -111,9 +113,10 @@ def add_project_progress(request, project_id):
 
 @login_required
 def delete_project_progress(request, project_id, project_progress_id):
-    ProjectProgress.objects.filter(id=project_progress_id, project_id=project_id).delete()
+    project_progress_to_delete = ProjectProgress.objects.get(id=project_progress_id, project_id=project_id)
+    project_progress_to_delete.delete()
 
-    # ToDo: Flash message
+    messages.add_message(request, messages.INFO, "Project progress deleted.")
     return HttpResponseRedirect('/projects/' + project_id + '/')
 
 
@@ -127,7 +130,7 @@ def edit_project_progress(request, project_id, project_progress_id):
         if form.is_valid():
             form.save()
 
-            # ToDo: Flash message
+            messages.add_message(request, messages.INFO, "Project progress saved.")
             return HttpResponseRedirect('/projects/' + project_id + '/')
     else:
         form = ProjectProgressForm(instance=project_progress)
