@@ -1,5 +1,7 @@
-* {
-  font-family: Arial;
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Lato:700');
 
-  color: blue;
-}
+// Components
+@import 'components/page';
+@import 'components/buttons';
