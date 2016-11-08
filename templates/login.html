@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Login</h1>
 
-    <form action="/" method="POST">
+    <form method="POST">
         {% csrf_token %}
 
         {{ form.username.errors }}

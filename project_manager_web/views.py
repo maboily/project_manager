@@ -61,7 +61,7 @@ def add_project(request):
 @login_required
 def view_project(request, project_id):
     project = Project.objects.get(pk=project_id)
-    project_progresses = project.projectprogress_set.all()
+    project_progresses = project.projectprogress_set.all().order_by('-date')
 
     return render(request, 'projects/view.html', {'project': project, 'project_progresses': project_progresses})
 

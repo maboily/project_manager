@@ -7,8 +7,8 @@
     <nav>
         <ul class="menu">
             {% if user.is_authenticated %}
-                <li class="menu-item"><a href="/projects/">Projects</a></li>
-                <li class="menu-item"><a href="/logout/">Logout</a></li>
+                <li class="menu-item"><a href="{% url 'projects.index' %}">Projects</a></li>
+                <li class="menu-item"><a href="{% url 'logout' %}">Logout</a></li>
             {% endif %}
         </ul>
     </nav>
