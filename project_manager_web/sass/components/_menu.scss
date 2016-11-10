@@ -1,8 +1,8 @@
 $menu-bg-color: #27ae60;
 $sub-menu-bg-color: #2ecc71;
 
-$menu-links-color: #fff;
-$menu-links-color-hover: #ddd;
+$menu-links-color: #eee;
+$menu-links-color-hover: #fff;
 
 $menu-links-size: 18px;
 $sub-menu-links-size: 16px;
@@ -57,13 +57,13 @@ $sub-menu-links-size: 16px;
         background-color: $sub-menu-bg-color;
         display: none;
         position: absolute;
-        width: 150px;
+        width: 200px;
 
         // Sub-menu links
         a {
           display: block;
           font-size: $sub-menu-links-size;
-          padding: 10px 5px;
+          padding: 10px 15px;
         }
       }
 
