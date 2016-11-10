@@ -1,0 +1,77 @@
+$menu-bg-color: #27ae60;
+$sub-menu-bg-color: #2ecc71;
+
+$menu-links-color: #fff;
+$menu-links-color-hover: #ddd;
+
+$menu-links-size: 18px;
+$sub-menu-links-size: 16px;
+
+// Core menu block
+.menu {
+  background-color: $menu-bg-color;
+  display: flex;
+  justify-content: space-between;
+
+  // Menu items alignments
+  > .menu-left {
+    order: 1;
+  }
+
+  > .menu-right {
+    order: 2;
+
+    // Forces sub-menu to appear to the right
+    .sub-menu {
+      right: 0;
+    }
+  }
+
+  // Menu links
+  a {
+    color: $menu-links-color;
+    display: block;
+    text-decoration: none;
+
+    &:hover {
+      color: $menu-links-color-hover;
+    }
+  }
+
+  // Direct descendant menu items
+  > ul {
+    display: flex;
+    list-style: none;
+
+    // Menu items
+    > li {
+      position: relative; // For sub-items menu
+
+      // First-level menu links
+      > a {
+        font-size: $menu-links-size;
+        padding: 10px 15px;
+      }
+
+      .sub-menu {
+        background-color: $sub-menu-bg-color;
+        display: none;
+        position: absolute;
+        width: 150px;
+
+        // Sub-menu links
+        a {
+          display: block;
+          font-size: $sub-menu-links-size;
+          padding: 10px 5px;
+        }
+      }
+
+      &:hover {
+        .sub-menu {
+          display: block;
+        }
+      }
+    }
+  }
+}
