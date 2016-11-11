@@ -8,3 +8,15 @@ body {
   padding: 15px;
   width: 100%;
 }
+
+// Header layout
+.header {
+  display: block;
+  position: relative;
+
+  .buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Projects listing</h2>
 
-    <a href="{% url 'projects.add' %}" class="button button-positive">Add new project</a>
+    <div class="header">
+        <h2>Projects listing</h2>
+
+        <div class="buttons">
+            <a href="{% url 'projects.add' %}" class="button button-positive">Add new project</a>
+        </div>
+    </div>
 
     <table>
         <thead>
