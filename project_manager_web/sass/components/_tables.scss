@@ -1,0 +1,25 @@
+$table-header-bg-color: #555;
+$table-header-fg-color: #eee;
+
+table {
+  width: 100%;
+
+  thead {
+    background: $table-header-bg-color;
+    color: $table-header-fg-color;
+    font-size: 16px;
+
+    th {
+      border: 1px solid #000;
+      font-weight: bold;
+      padding: 5px;
+    }
+  }
+
+  tbody {
+    td {
+      border: 1px solid #000;
+      padding: 5px;
+    }
+  }
+}

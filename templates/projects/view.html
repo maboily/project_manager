@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Project - {{ project.name }}</h1>
+    <h2>Project - {{ project.name }}</h2>
 
-    <a href="{% url 'projects.edit' project.id %}">Edit</a>
+    <a href="{% url 'projects.edit' project.id %}" class="button button-positive">Edit</a>
 
     <p>{{ project.description }}</p>
 
@@ -13,9 +13,9 @@
         <p>End date: {{ project.end_date }}</p>
     </div>
 
-    <h2>Activity</h2>
+    <h3>Activity</h3>
 
-    <a href="{% url 'projects.progresses.add' project.id %}">Add new progress</a>
+    <a href="{% url 'projects.progresses.add' project.id %}" class="button button-positive">Add new progress</a>
 
     <table>
         <thead>
@@ -32,8 +32,8 @@
                     <td>{{ project_progress.notification_text }}</td>
                     <td>{{ project_progress.date }}</td>
                     <td>
-                        <a href="{% url 'projects.progresses.edit' project.id project_progress.id %}">Edit</a>
-                        <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}">Delete</a>
+                        <a href="{% url 'projects.progresses.edit' project.id project_progress.id %}" class="button button-positive">Edit</a>
+                        <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}" class="button button-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

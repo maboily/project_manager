@@ -1,0 +1,35 @@
+.button {
+  border: 0;
+  box-shadow: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  min-width: 80px;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+
+  &.button-positive {
+    background-color: #2ecc71;
+
+    &:hover {
+      background-color: #27ae60;
+    }
+  }
+
+  &.button-danger {
+    background-color: #e74c3c;
+
+    &:hover {
+      background-color: #c0392b;
+    }
+  }
+
+  &.button-default {
+    background-color: #3498db;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+}

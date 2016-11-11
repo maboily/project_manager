@@ -8,7 +8,11 @@
 // Meyer's CSS reset
 @import 'components/reset';
 
+// Globals
+@import 'globals/typography';
+@import 'globals/layout';
+
 // Components
-@import 'globals/_layout';
 @import 'components/buttons';
 @import 'components/menu';
+@import 'components/tables';
