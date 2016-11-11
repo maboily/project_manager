@@ -70,6 +70,7 @@ $sub-menu-links-size: 16px;
       &:hover {
         .sub-menu {
           display: block;
+          z-index: 100;
         }
       }
     }

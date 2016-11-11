@@ -18,9 +18,15 @@
         <p>End date: {{ project.end_date }}</p>
     </div>
 
-    <h3>Activity</h3>
+    <div class="header">
+        <h3>Activity</h3>
 
-    <a href="{% url 'projects.progresses.add' project.id %}" class="button button-positive">Add new progress</a>
+        <div class="buttons">
+            <a href="{% url 'projects.progresses.add' project.id %}" class="button button-positive">Add new progress</a>
+        </div>
+    </div>
+
+
 
     <table>
         <thead>

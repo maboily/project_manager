@@ -7,7 +7,9 @@
         {% block form_header %}{% endblock %}
 
         {% csrf_token %}
-        {{ form.as_p }}
+        <ul class="form-container">
+            {{ form.as_ul }}
+        </ul>
 
         {% block form_footer %}{% endblock %}
     </form>
