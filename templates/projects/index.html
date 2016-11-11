@@ -25,7 +25,7 @@
                     <td>
                         <a href="{% url 'projects.view' project.id %}" class="button button-default">View</a>
                         <a href="{% url 'projects.edit' project.id %}" class="button button-positive">Edit</a>
-                        <a href="{% url 'projects.delete' project.id %}" class="button button-danger">Delete</a>
+                        <a href="{% url 'projects.delete' project.id %}" class="button button-danger confirm-delete">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

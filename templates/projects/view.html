@@ -44,7 +44,7 @@
                     <td>{{ project_progress.date }}</td>
                     <td>
                         <a href="{% url 'projects.progresses.edit' project.id project_progress.id %}" class="button button-positive">Edit</a>
-                        <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}" class="button button-danger">Delete</a>
+                        <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}" class="button button-danger confirm-delete">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
