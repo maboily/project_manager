@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, render
 
@@ -61,7 +62,16 @@ def add_project(request):
 @login_required
 def view_project(request, project_id):
     project = Project.objects.get(pk=project_id)
-    project_progresses = project.projectprogress_set.all().order_by('-date')
+    project_progresses_list = project.projectprogress_set.all().order_by('-date')
+
+    paginator = Paginator(project_progresses_list, 5)
+    page = request.GET.get('progresses_page')
+    try:
+        project_progresses = paginator.page(page)
+    except PageNotAnInteger:
+        project_progresses = paginator.page(1)
+    except EmptyPage:
+        project_progresses = paginator.page(paginator.num_pages)
 
     return render(request, 'projects/view.html', {'project': project, 'project_progresses': project_progresses})
 
