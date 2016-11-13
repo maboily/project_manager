@@ -136,3 +136,7 @@ def edit_project_progress(request, project_id, project_progress_id):
         form = ProjectProgressForm(instance=project_progress)
 
     return render(request, 'projects/progresses/edit.html', {'form': form})
+
+
+def polymer_date_picker(request):
+    return render(request, 'polymer/date-picker.html')

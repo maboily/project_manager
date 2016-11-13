@@ -1,0 +1,18 @@
+.project-description {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  display: block;
+  margin-left: 10px;
+  padding: 10px;
+}
+
+.project-fields {
+  margin-left: 10px;
+
+  .project-field-label {
+    display: inline-block;
+    font-weight: bold;
+    max-width: 200px;
+    width: 100%;
+  }
+}

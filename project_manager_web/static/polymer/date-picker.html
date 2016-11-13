@@ -1,0 +1,181 @@
+<link rel="import" href="https://polygit.org/components/polymer/polymer.html">
+
+<dom-module id="date-picker">
+    <template>
+        <style>
+            .date-picker-container {
+                border: 1px solid #000;
+                text-align: center;
+                height: 255px;
+                width: 300px;
+            }
+
+            .date-picker-months {
+                background: #000;
+                color: #fff;
+                font-size: 22px;
+                padding: 10px;
+            }
+
+            .date-picker-months button {
+                float: left;
+            }
+
+            .date-picker-day {
+                display: inline-block;
+                font-size: 18px;
+                text-align: center;
+                line-height: 35px;
+                width: 35px;
+            }
+        </style>
+
+        <input type="text" name="[[name]]" id="[[id]]"/>
+
+        <div class="date-picker-container">
+            <!-- Bind available months -->
+            <div class="date-picker-months">
+                <button type="button" on-click="lastMonth">&lt;</button>
+                <span>[[currentMonth]]</span>
+                <button type="button" on-click="nextMonth">&gt;</button>
+            </div>
+
+            <!-- Bind weeks of month -->
+            <template is="dom-repeat" items="{{weeks}}">
+                <div class="date-picker-week">
+                    <template is="dom-repeat" items="{{item.days}}">
+                        <span class$="date-picker-day {{item.dayClass}}">
+                            [[item.day]]
+                        </span>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'date-picker',
+
+            constants: {
+                months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            },
+
+            properties: {
+                id: String,
+                name: String
+            },
+
+            internalState: {
+                currentMonthDate: {
+                    month: 2,
+                    year: 2016
+                }
+            },
+
+            ready: function () {
+                this.currentMonth = 'November 2016';
+                this.weeks = [];
+
+                this.updateMonthDisplay();
+                this.generateWeeksDisplay();
+            },
+
+            lastMonth: function () {
+                var updatedCurrentMonthDate = {
+                    month: this.internalState.currentMonthDate.month - 1,
+                    year: this.internalState.currentMonthDate.year
+                };
+
+                if (updatedCurrentMonthDate.month === -1) {
+                    updatedCurrentMonthDate = {
+                        month: 11,
+                        year: this.internalState.currentMonthDate.year - 1
+                    };
+                }
+
+                this.internalState.currentMonthDate = updatedCurrentMonthDate;
+                this.updateMonthDisplay();
+                this.generateWeeksDisplay();
+            },
+
+            nextMonth: function () {
+                var updatedCurrentMonthDate = {
+                    month: this.internalState.currentMonthDate.month + 1,
+                    year: this.internalState.currentMonthDate.year
+                };
+
+                if (updatedCurrentMonthDate.month === 12) {
+                    updatedCurrentMonthDate = {
+                        month: 0,
+                        year: this.internalState.currentMonthDate.year + 1
+                    };
+                }
+
+                this.internalState.currentMonthDate = updatedCurrentMonthDate;
+                this.updateMonthDisplay();
+                this.generateWeeksDisplay();
+            },
+
+            generateWeeksDisplay: function () {
+                // Initial day of month
+                var initialDayOfMonth = new Date(
+                        this.internalState.currentMonthDate.year,
+                        this.internalState.currentMonthDate.month,
+                        1
+                );
+
+                // Days in month
+                var daysInMonthDate = new Date(
+                        this.internalState.currentMonthDate.year,
+                        this.internalState.currentMonthDate.month,
+                        0
+                );
+                var daysInMonth = daysInMonthDate.getDate();
+
+                // Weeks collection
+                var weeks = [];
+
+                // Pads first week
+                var week = {days: []};
+                for (var dayOfWeek = 0; dayOfWeek < initialDayOfMonth.getDay(); dayOfWeek++) {
+                    week.days.push({
+                        day: null,
+                        dayClass: "outer-month-day"
+                    });
+                }
+
+                // Pass week-by-week
+                for (var day = 1; day <= daysInMonth; day++) {
+                    week.days.push({
+                        day: day,
+                        dayClass: "current-month-day"
+                    });
+
+                    if (week.days.length == 7) {
+                        weeks.push(week);
+                        week = {days: []};
+                    }
+                }
+
+                // Pads then push last week if not empty
+                if (week.days.length > 0) {
+                    // Padding
+                    for (var i = week.days.length; i < 7; i++) {
+                        week.days.push({
+                            day: null,
+                            dayClass: "outer-month-day"
+                        });
+                    }
+                    weeks.push(week);
+                }
+
+                this.weeks = weeks;
+            },
+
+            updateMonthDisplay: function () {
+                this.currentMonth = this.constants.months[this.internalState.currentMonthDate.month] + ' ' + this.internalState.currentMonthDate.year;
+            }
+        });
+    </script>
+</dom-module>

@@ -10,13 +10,13 @@
     </div>
 
 
-    <p>{{ project.description }}</p>
+    <p class="project-description">{{ project.description }}</p>
 
-    <div>
-        <p>Status: {{ project.status }}</p>
-        <p>Start date: {{ project.start_date }}</p>
-        <p>End date: {{ project.end_date }}</p>
-    </div>
+    <ul class="project-fields">
+        <li><span class="project-field-label">Status: </span> {{ project.status }}</li>
+        <li><span class="project-field-label">Start date: </span>{{ project.start_date }}</li>
+        <li><span class="project-field-label">End date: </span>{{ project.end_date }}</li>
+    </ul>
 
     <div class="header">
         <h3>Activity</h3>

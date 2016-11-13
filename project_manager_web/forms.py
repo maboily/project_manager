@@ -1,6 +1,8 @@
 from django import forms
+from django.forms import models
 
 from project_manager_web.models import Project, ProjectProgress
+from project_manager_web.widgets import CustomVueDatePickerInput
 
 
 class ProjectForm(forms.ModelForm):
@@ -13,3 +15,6 @@ class ProjectProgressForm(forms.ModelForm):
     class Meta:
         model = ProjectProgress
         fields = ['notification_text', 'date']
+        widgets = {
+            "date": CustomVueDatePickerInput()
+        }

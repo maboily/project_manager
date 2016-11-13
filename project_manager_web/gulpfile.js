@@ -64,6 +64,11 @@ gulp.task('livereload', function() {
 
     // Templates
     watch('../templates/**/*.html', function () {
-        livereload.changed('../templates/');
+        livereload.changed('/');
+    });
+
+    // Polymer
+    watch('./static/polymer/**/*.html', function () {
+        livereload.changed('/static/polymer/');
     });
 });
