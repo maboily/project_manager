@@ -55,24 +55,30 @@
             }
         </style>
 
-        <input type="text" name="[[name]]" id="[[id]]" value="[[selectedDayFormatted]]" on-focus="showDatepicker" autocomplete="off"/>
+        <template is="dom-if" if="{{!supportsInputDate}}">
+            <input type="text" name="[[name]]" id="[[id]]" value="[[value]]" on-focus="showDatepicker" autocomplete="off"/>
 
-        <template is="dom-if" if="{{datepickerShown}}">
-            <div class="date-picker-container" id="datepicker-[[id]]">
-                <!-- Bind available months -->
-                <div class="date-picker-months">
-                    <button type="button" on-click="lastMonth" class="button-before">&lt;</button>
-                    <span>[[currentMonth]]</span>
-                    <button type="button" on-click="nextMonth" class="button-after">&gt;</button>
-                </div>
-
-                <!-- Bind weeks of month -->
-                <template is="dom-repeat" items="{{weeks}}">
-                    <div class="date-picker-week">
-                        <template is="dom-repeat" items="{{item.days}}"><span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">[[item.day]]</span></template>
+            <template is="dom-if" if="{{datepickerShown}}">
+                <div class="date-picker-container" id="datepicker-[[id]]">
+                    <!-- Bind available months -->
+                    <div class="date-picker-months">
+                        <button type="button" on-click="lastMonth" class="button-before">&lt;</button>
+                        <span>[[currentMonth]]</span>
+                        <button type="button" on-click="nextMonth" class="button-after">&gt;</button>
                     </div>
-                </template>
-            </div>
+
+                    <!-- Bind weeks of month -->
+                    <template is="dom-repeat" items="{{weeks}}">
+                        <div class="date-picker-week">
+                            <template is="dom-repeat" items="{{item.days}}"><span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">[[item.day]]</span></template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </template>
+
+        <template is="dom-if" if="{{supportsInputDate}}">
+            <input type="date" name="[[name]]" id="[[id]]" value="[[value]]"/>
         </template>
     </template>
 
@@ -86,7 +92,8 @@
 
             properties: {
                 id: String,
-                name: String
+                name: String,
+                value: String
             },
 
             internalState: {
@@ -98,9 +105,9 @@
 
             ready: function () {
                 this.currentMonth = 'November 2016';
-                this.selectedDayFormatted = '';
                 this.datepickerShown = false;
                 this.weeks = [];
+                this.supportsInputDate = this.detectSupportInputDate();
 
                 this.updateMonthDisplay();
                 this.generateWeeksDisplay();
@@ -210,7 +217,7 @@
             },
 
             setDayFormattedFromItem: function (item) {
-                this.selectedDayFormatted = new Date(item.year, item.month, item.day).toISOString().slice(0, 10);
+                this.value = new Date(item.year, item.month, item.day).toISOString().slice(0, 10);
             },
 
             updateMonthDisplay: function () {
@@ -240,6 +247,16 @@
                         hideDatepicker();
                     }
                 });
+            },
+
+            detectSupportInputDate: function () {
+                var inputTest = document.createElement('input');
+                inputTest.setAttribute('type', 'date');
+
+                var valueForTest = 'string-value';
+                inputTest.setAttribute('value', valueForTest);
+
+                return (inputTest.value !== valueForTest);
             }
         });
     </script>
