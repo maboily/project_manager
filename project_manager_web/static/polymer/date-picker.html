@@ -4,6 +4,7 @@
     <template>
         <style>
             .date-picker-container {
+                position: fixed;
                 border: 1px solid #000;
                 cursor: default;
                 text-align: center;
@@ -54,23 +55,25 @@
             }
         </style>
 
-        <input type="text" name="[[name]]" id="[[id]]" value="[[selectedDayFormatted]]"/>
+        <input type="text" name="[[name]]" id="[[id]]" value="[[selectedDayFormatted]]" on-focus="showDatepicker" autocomplete="off"/>
 
-        <div class="date-picker-container">
-            <!-- Bind available months -->
-            <div class="date-picker-months">
-                <button type="button" on-click="lastMonth" class="button-before">&lt;</button>
-                <span>[[currentMonth]]</span>
-                <button type="button" on-click="nextMonth" class="button-after">&gt;</button>
-            </div>
-
-            <!-- Bind weeks of month -->
-            <template is="dom-repeat" items="{{weeks}}">
-                <div class="date-picker-week">
-                    <template is="dom-repeat" items="{{item.days}}"><span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">[[item.day]]</span></template>
+        <template is="dom-if" if="{{datepickerShown}}">
+            <div class="date-picker-container" id="datepicker-[[id]]">
+                <!-- Bind available months -->
+                <div class="date-picker-months">
+                    <button type="button" on-click="lastMonth" class="button-before">&lt;</button>
+                    <span>[[currentMonth]]</span>
+                    <button type="button" on-click="nextMonth" class="button-after">&gt;</button>
                 </div>
-            </template>
-        </div>
+
+                <!-- Bind weeks of month -->
+                <template is="dom-repeat" items="{{weeks}}">
+                    <div class="date-picker-week">
+                        <template is="dom-repeat" items="{{item.days}}"><span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">[[item.day]]</span></template>
+                    </div>
+                </template>
+            </div>
+        </template>
     </template>
 
     <script>
@@ -96,10 +99,12 @@
             ready: function () {
                 this.currentMonth = 'November 2016';
                 this.selectedDayFormatted = '';
+                this.datepickerShown = false;
                 this.weeks = [];
 
                 this.updateMonthDisplay();
                 this.generateWeeksDisplay();
+                this.setupDatepickerVisibility();
             },
 
             lastMonth: function () {
@@ -210,6 +215,31 @@
 
             updateMonthDisplay: function () {
                 this.currentMonth = this.constants.months[this.internalState.currentMonthDate.month] + ' ' + this.internalState.currentMonthDate.year;
+            },
+
+            showDatepicker: function () {
+                this.datepickerShown = true;
+            },
+
+            hideDatepicker: function () {
+                this.datepickerShown = false;
+            },
+
+            setupDatepickerVisibility: function () {
+                // Event listener for clicking outside
+                var datepickerIdentifier = 'datepicker-' + this.id;
+                var inputId = this.id;
+                var hideDatepicker = this.hideDatepicker.bind(this);
+
+
+                window.addEventListener('click', function (e) {
+                    if (document.getElementById(datepickerIdentifier) &&
+                        !document.getElementById(datepickerIdentifier).contains(e.target) &&
+                        !document.getElementById(inputId).contains(e.target)) {
+                        // Clicked outside
+                        hideDatepicker();
+                    }
+                });
             }
         });
     </script>
