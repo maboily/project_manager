@@ -17,11 +17,26 @@
                 padding: 10px;
             }
 
-            .date-picker-months button {
+            .date-picker-months .button-before {
                 float: left;
             }
 
+            .date-picker-months .button-after {
+                float: right;
+            }
+
+            .button-before, .button-after {
+                background-color: #888;
+                border: none;
+                box-shadow: none;
+                color: #fff;
+                cursor: pointer;
+                font-weight: bold;
+                padding: 5px 10px;
+            }
+
             .date-picker-day {
+                cursor: pointer;
                 display: inline-block;
                 font-size: 18px;
                 text-align: center;
@@ -30,21 +45,21 @@
             }
         </style>
 
-        <input type="text" name="[[name]]" id="[[id]]"/>
+        <input type="text" name="[[name]]" id="[[id]]" value="[[selectedDayFormatted]]"/>
 
         <div class="date-picker-container">
             <!-- Bind available months -->
             <div class="date-picker-months">
-                <button type="button" on-click="lastMonth">&lt;</button>
+                <button type="button" on-click="lastMonth" class="button-before">&lt;</button>
                 <span>[[currentMonth]]</span>
-                <button type="button" on-click="nextMonth">&gt;</button>
+                <button type="button" on-click="nextMonth" class="button-after">&gt;</button>
             </div>
 
             <!-- Bind weeks of month -->
             <template is="dom-repeat" items="{{weeks}}">
                 <div class="date-picker-week">
                     <template is="dom-repeat" items="{{item.days}}">
-                        <span class$="date-picker-day {{item.dayClass}}">
+                        <span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">
                             [[item.day]]
                         </span>
                     </template>
@@ -68,13 +83,14 @@
 
             internalState: {
                 currentMonthDate: {
-                    month: 2,
+                    month: 10,
                     year: 2016
                 }
             },
 
             ready: function () {
                 this.currentMonth = 'November 2016';
+                this.selectedDayFormatted = '';
                 this.weeks = [];
 
                 this.updateMonthDisplay();
@@ -128,7 +144,7 @@
                 // Days in month
                 var daysInMonthDate = new Date(
                         this.internalState.currentMonthDate.year,
-                        this.internalState.currentMonthDate.month,
+                        this.internalState.currentMonthDate.month + 1,
                         0
                 );
                 var daysInMonth = daysInMonthDate.getDate();
@@ -148,6 +164,8 @@
                 // Pass week-by-week
                 for (var day = 1; day <= daysInMonth; day++) {
                     week.days.push({
+                        year: this.internalState.currentMonthDate.year,
+                        month: this.internalState.currentMonthDate.month,
                         day: day,
                         dayClass: "current-month-day"
                     });
@@ -171,6 +189,18 @@
                 }
 
                 this.weeks = weeks;
+            },
+
+            selectDay: function (evt) {
+                var item = evt.model.item;
+
+                if (item.day !== null) {
+                    this.setDayFormattedFromItem(item);
+                }
+            },
+
+            setDayFormattedFromItem: function (item) {
+                this.selectedDayFormatted = new Date(item.year, item.month, item.day).toISOString().slice(0, 10);
             },
 
             updateMonthDisplay: function () {
