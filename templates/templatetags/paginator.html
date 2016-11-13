@@ -1,13 +1,13 @@
 <ul class="pagination">
     {% if object.has_previous %}
-        <li><a href="?progresses_page={{ object.previous_page_number }}">Previous</a></li>
+        <li><a href="?{{ get_param }}={{ object.previous_page_number }}">Previous</a></li>
     {% endif %}
 
     {% for page in object.paginator.page_range %}
-        <li class="page{% if page == object.number %} current-page{% endif %}"><a href="?progresses_page={{ page }}">{{ page }}</a></li>
+        <li class="page{% if page == object.number %} current-page{% endif %}"><a href="?{{ get_param }}={{ page }}">{{ page }}</a></li>
     {% endfor %}
 
     {% if object.has_next %}
-        <li><a href="?progresses_page={{ object.next_page_number }}">Next</a></li>
+        <li><a href="?{{ get_param }}={{ object.next_page_number }}">Next</a></li>
     {% endif %}
 </ul>

@@ -38,9 +38,18 @@ def do_logout(request):
 
 @login_required
 def projects(request):
-    projects = Project.objects.all
+    projects_list = Project.objects.all()
 
-    return render(request, 'projects/index.html', {'projects': projects})
+    paginator = Paginator(projects_list, 10)
+    page = request.GET.get('project_page')
+    try:
+        projects_obj = paginator.page(page)
+    except PageNotAnInteger:
+        projects_obj = paginator.page(1)
+    except EmptyPage:
+        projects_obj = paginator.page(paginator.num_pages)
+
+    return render(request, 'projects/index.html', {'projects': projects_obj})
 
 
 @login_required
@@ -65,7 +74,7 @@ def view_project(request, project_id):
     project_progresses_list = project.projectprogress_set.all().order_by('-date')
 
     paginator = Paginator(project_progresses_list, 5)
-    page = request.GET.get('progresses_page')
+    page = request.GET.get('progress_page')
     try:
         project_progresses = paginator.page(page)
     except PageNotAnInteger:
