@@ -10,13 +10,17 @@
     </div>
 
 
-    <p class="project-description">{{ project.description }}</p>
+    <div class="project-layout">
+        <ul class="project-fields">
+            <li class="fl-full"><span class="project-field-label">Status</span> {{ project.status }}</li>
+            <li class="fl-half"><span class="project-field-label">Start date</span>{{ project.start_date }}</li>
+            <li class="fl-half"><span class="project-field-label">End date</span>{{ project.end_date }}</li>
+        </ul>
 
-    <ul class="project-fields">
-        <li><span class="project-field-label">Status: </span> {{ project.status }}</li>
-        <li><span class="project-field-label">Start date: </span>{{ project.start_date }}</li>
-        <li><span class="project-field-label">End date: </span>{{ project.end_date }}</li>
-    </ul>
+        <p class="project-description">
+            <span class="project-field-label">Description</span>{{ project.description }}
+        </p>
+    </div>
 
     <div class="header">
         <h3>Activity</h3>
@@ -30,24 +34,26 @@
 
     <table>
         <thead>
-            <tr>
-                <th>Notification text</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Notification text</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
         </thead>
 
         <tbody>
-            {% for project_progress in project_progresses %}
-                <tr>
-                    <td>{{ project_progress.notification_text }}</td>
-                    <td>{{ project_progress.date }}</td>
-                    <td>
-                        <a href="{% url 'projects.progresses.edit' project.id project_progress.id %}" class="button button-positive">Edit</a>
-                        <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}" class="button button-danger confirm-delete">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% for project_progress in project_progresses %}
+            <tr>
+                <td>{{ project_progress.notification_text }}</td>
+                <td>{{ project_progress.date }}</td>
+                <td>
+                    <a href="{% url 'projects.progresses.edit' project.id project_progress.id %}"
+                       class="button button-positive">Edit</a>
+                    <a href="{% url 'projects.progresses.delete' project.id project_progress.id %}"
+                       class="button button-danger confirm-delete">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
