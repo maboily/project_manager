@@ -5,6 +5,7 @@
         <style>
             .date-picker-container {
                 border: 1px solid #000;
+                cursor: default;
                 text-align: center;
                 height: 255px;
                 width: 300px;
@@ -35,6 +36,10 @@
                 padding: 5px 10px;
             }
 
+            .button-before:hover, .button-after:hover {
+                background-color: #aaa;
+            }
+
             .date-picker-day {
                 cursor: pointer;
                 display: inline-block;
@@ -42,6 +47,10 @@
                 text-align: center;
                 line-height: 35px;
                 width: 35px;
+            }
+
+            .date-picker-day:hover {
+                background: #eee;
             }
         </style>
 
@@ -58,11 +67,7 @@
             <!-- Bind weeks of month -->
             <template is="dom-repeat" items="{{weeks}}">
                 <div class="date-picker-week">
-                    <template is="dom-repeat" items="{{item.days}}">
-                        <span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">
-                            [[item.day]]
-                        </span>
-                    </template>
+                    <template is="dom-repeat" items="{{item.days}}"><span class$="date-picker-day {{item.dayClass}}" on-click="selectDay">[[item.day]]</span></template>
                 </div>
             </template>
         </div>
