@@ -109,6 +109,7 @@
                 this.weeks = [];
                 this.supportsInputDate = this.detectSupportInputDate();
 
+                this.setCurrentMonthFromValue();
                 this.updateMonthDisplay();
                 this.generateWeeksDisplay();
                 this.setupDatepickerVisibility();
@@ -218,6 +219,15 @@
 
             setDayFormattedFromItem: function (item) {
                 this.value = new Date(item.year, item.month, item.day).toISOString().slice(0, 10);
+            },
+
+            setCurrentMonthFromValue: function () {
+                if (this.value) {
+                    this.internalState.currentMonthDate = {
+                        year: parseInt(this.value.substr(0, 4)),
+                        month: parseInt(this.value.substr(5, 2)) - 1
+                    };
+                }
             },
 
             updateMonthDisplay: function () {
