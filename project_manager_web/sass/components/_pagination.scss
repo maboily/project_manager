@@ -1,0 +1,23 @@
+.pagination {
+  margin: 5px 0;
+  text-align: center;
+  width: 100%;
+
+  li {
+    display: inline-block;
+
+    &.current-page {
+      font-weight: bold;
+      padding: 5px;
+    }
+
+    &.page {
+      width: 20px;
+    }
+
+    > a {
+      display: inline-block;
+      padding: 5px;
+    }
+  }
+}

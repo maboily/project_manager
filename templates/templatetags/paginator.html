@@ -4,7 +4,11 @@
     {% endif %}
 
     {% for page in object.paginator.page_range %}
-        <li class="page{% if page == object.number %} current-page{% endif %}"><a href="?{{ get_param }}={{ page }}">{{ page }}</a></li>
+        {% if page == object.number %}
+            <li class="page current-page">{{ page }}</li>
+        {% else %}
+            <li class="page"><a href="?{{ get_param }}={{ page }}">{{ page }}</a></li>
+        {% endif %}
     {% endfor %}
 
     {% if object.has_next %}
