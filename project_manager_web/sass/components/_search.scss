@@ -1,0 +1,42 @@
+.results-count {
+  font-size: 18px;
+  margin: 20px 0;
+  font-style: italic;
+}
+
+.results {
+  .search-result {
+    background-color: #fafafa;
+    border-left: 10px solid #ddd;
+    margin: 10px 0;
+    padding: 10px 0 20px 10px;
+
+    a {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 5px;
+    }
+  }
+}
+
+.search-form {
+  .search-field {
+    display: block;
+    margin: 0 0 10px 5px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    input, select {
+      max-width: 400px;
+      width: 100%;
+    }
+  }
+}

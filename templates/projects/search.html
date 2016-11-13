@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Search my projects</h2>
+
+    <form class="search-form" method="GET">
+        {% csrf_token %}
+
+        <div class="search-field">
+            <label for="{{ form.search_text.id_for_label }}">{{ form.search_text.label }}</label>
+            {{ form.search_text }}
+        </div>
+
+        <div class="search-field">
+            <label for="{{ form.search_in.id_for_label }}">{{ form.search_in.label }}</label>
+            {{ form.search_in }}
+        </div>
+
+        <button type="submit" class="button button-positive">Search</button>
+    </form>
+
+    {% if results %}
+        <div class="results-count">Found {{ results.paginator.count }} result(s).</div>
+
+        <div class="results">
+            {% for result in results %}
+                <div class="search-result">
+                    <a href="{% url 'projects.view' result.id %}">{{ result.name }}</a>
+
+                    <p>{{ result.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% paginator results 'search_page' %}
+    {% endif %}
+{% endblock %}

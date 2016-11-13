@@ -9,8 +9,9 @@ from django.shortcuts import render_to_response, render
 
 
 # Create your views here.
-from project_manager_web.forms import ProjectForm, ProjectProgressForm
+from project_manager_web.forms import ProjectForm, ProjectProgressForm, SearchForm
 from project_manager_web.models import Project, ProjectProgress
+from project_manager_web.search.search_helper import SearchHelper
 
 
 def home(request):
@@ -155,3 +156,26 @@ def edit_project_progress(request, project_id, project_progress_id):
         form = ProjectProgressForm(instance=project_progress)
 
     return render(request, 'projects/progresses/edit.html', {'form': form})
+
+
+@login_required
+def search_project(request):
+    if request.GET.get('search_text') is not None and request.GET.get('search_in') is not None:
+        form = SearchForm(request.GET)
+
+        helper_instance = SearchHelper(search_for=form.data['search_text'], search_in=form.data['search_in'])
+        results_list = helper_instance.find_results()
+
+        paginator = Paginator(results_list, 10)
+        page = request.GET.get('search_page')
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            results = paginator.page(1)
+        except EmptyPage:
+            results = paginator.page(paginator.num_pages)
+    else:
+        form = SearchForm()
+        results = None
+
+    return render(request, 'projects/search.html', {'form': form, 'results': results})

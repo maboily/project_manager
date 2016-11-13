@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^projects/$', views.projects, name='projects.index'),
     url(r'^projects/add/$', views.add_project, name='projects.add'),
+    url(r'^projects/search/$', views.search_project, name='projects.search'),
     url(r'^projects/(?P<project_id>\w+)/$', views.view_project, name='projects.view'),
     url(r'^projects/(?P<project_id>\w+)/', include(project_progresses_patterns)),
     url(r'^projects/delete/(?P<project_id>\w+)/$', views.delete_project, name='projects.delete'),
