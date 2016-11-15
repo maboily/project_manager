@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}"/>
     <link rel="import" href="https://polygit.org/components/polymer/polymer.html">
     <link rel="import" href="{% static 'polymer/date-picker.html' %}">
 
@@ -12,45 +12,45 @@
 </head>
 <body>
 
-    <nav class="menu">
-        <ul class="menu-left">
-            {% if user.is_authenticated %}
-                <li>
-                    <a href="javascript: void(0)">Projects</a>
-                    <ul class="sub-menu">
-                        <li><a href="{% url 'projects.index' %}">View my projects</a></li>
-                        <li><a href="{% url 'projects.search' %}">Search my projects</a></li>
-                    </ul>
-                </li>
-            {% endif %}
-        </ul>
-
-        <ul class="menu-right">
+<nav class="menu">
+    <ul class="menu-left">
+        {% if user.is_authenticated %}
             <li>
-                <a href="javascript: void(0)">Account</a>
-                {% if user.is_authenticated %}
-                    <ul class="sub-menu">
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
-                {% else %}
-                    <ul class="sub-menu">
-                        <li><a href="{% url 'home' %}">Login</a></li>
-                    </ul>
-                {% endif %}
+                <a href="javascript: void(0)">Projects</a>
+                <ul class="sub-menu">
+                    <li><a href="{% url 'projects.index' %}">View my projects</a></li>
+                    <li><a href="{% url 'projects.search' %}">Search my projects</a></li>
+                </ul>
             </li>
-        </ul>
-    </nav>
+        {% endif %}
+    </ul>
 
-    {% if messages %}
+    <ul class="menu-right">
+        <li>
+            <a href="javascript: void(0)">Account</a>
+            {% if user.is_authenticated %}
+                <ul class="sub-menu">
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            {% else %}
+                <ul class="sub-menu">
+                    <li><a href="{% url 'home' %}">Login</a></li>
+                </ul>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+{% if messages %}
     <ul class="flash-messages">
         {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
+{% endif %}
 
-    <main class="main-content">
-        {% block content %}{% endblock %}
-    </main>
+<main class="main-content">
+    {% block content %}{% endblock %}
+</main>
 </body>
 </html>

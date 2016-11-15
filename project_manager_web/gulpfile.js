@@ -21,7 +21,7 @@ gulp.task('sass', function () {
         .pipe(livereload());
 });
 
-gulp.task('sass:watch', function() {
+gulp.task('sass:watch', function () {
     watch('./sass/**/*.scss', function () {
         gulp.start('sass');
     });
@@ -34,7 +34,7 @@ gulp.task('js', function () {
     });
 
     var combined = combiner(
-        b.transform(babelify, { presets: ['es2015'] }),
+        b.transform(babelify, {presets: ['es2015']}),
         b.bundle(),
         source('app.js'),
         buffer(),
@@ -55,8 +55,8 @@ gulp.task('js:watch', function () {
     });
 });
 
-gulp.task('livereload', function() {
-    livereload.listen({ start: true});
+gulp.task('livereload', function () {
+    livereload.listen({start: true});
 
     // SASS & JS
     gulp.start('sass:watch')

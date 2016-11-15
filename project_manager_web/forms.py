@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import models
 
 from project_manager_web.models import Project, ProjectProgress
 from project_manager_web.search.search_helper import SearchHelper

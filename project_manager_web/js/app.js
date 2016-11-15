@@ -1,8 +1,8 @@
 // Vendor
-import 'webcomponents.js';
+import "webcomponents.js";
+import confirmations from "./confirmations.js";
 
 // Modules
-import confirmations from './confirmations.js';
 
 // Load imported modules
 confirmations.init();

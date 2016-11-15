@@ -10,6 +10,7 @@ class CustomDatePickerInput(Widget):
     Base class for all <input> widgets (except type='checkbox' and
     type='radio', which are special).
     """
+
     def format_value(self, value):
         if self.is_localized:
             return formats.localize_input(value)

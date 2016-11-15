@@ -12,23 +12,24 @@
 
     <table>
         <thead>
-            <tr>
-                <th>Project name</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Project name</th>
+            <th>Actions</th>
+        </tr>
         </thead>
 
         <tbody>
-            {% for project in projects %}
-                <tr>
-                    <td>{{ project.name }}</td>
-                    <td>
-                        <a href="{% url 'projects.view' project.id %}" class="button button-default">View</a>
-                        <a href="{% url 'projects.edit' project.id %}" class="button button-positive">Edit</a>
-                        <a href="{% url 'projects.delete' project.id %}" class="button button-danger confirm-delete">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.name }}</td>
+                <td>
+                    <a href="{% url 'projects.view' project.id %}" class="button button-default">View</a>
+                    <a href="{% url 'projects.edit' project.id %}" class="button button-positive">Edit</a>
+                    <a href="{% url 'projects.delete' project.id %}"
+                       class="button button-danger confirm-delete">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 

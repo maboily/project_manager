@@ -9,4 +9,5 @@ def paginator(object, get_param):
         'get_param': get_param
     }
 
+
 register.inclusion_tag('templatetags/paginator.html')(paginator)

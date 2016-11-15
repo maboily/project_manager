@@ -7,7 +7,8 @@ from project_manager_web.views import HomeView, LogoutView
 
 project_progresses_patterns = [
     url(r'^progresses/add', views.add_project_progress, name='projects.progresses.add'),
-    url(r'^progresses/delete/(?P<project_progress_id>\w+)', views.delete_project_progress, name='projects.progresses.delete'),
+    url(r'^progresses/delete/(?P<project_progress_id>\w+)', views.delete_project_progress,
+        name='projects.progresses.delete'),
     url(r'^progresses/edit/(?P<project_progress_id>\w+)', views.edit_project_progress, name='projects.progresses.edit'),
 ]
 
@@ -21,4 +22,6 @@ urlpatterns = [
     url(r'^projects/delete/(?P<project_id>\w+)/$', views.delete_project, name='projects.delete'),
     url(r'^projects/edit/(?P<project_id>\w+)/$', views.edit_project, name='projects.edit'),
     url(r'^logout/$', LogoutView.as_view(), name='logout')
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
