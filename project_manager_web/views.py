@@ -9,32 +9,49 @@ from django.shortcuts import render_to_response, render
 
 
 # Create your views here.
+from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+
 from project_manager_web.forms import ProjectForm, ProjectProgressForm, SearchForm
 from project_manager_web.models import Project, ProjectProgress
 from project_manager_web.search.search_helper import SearchHelper
 
 
-def home(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-    elif request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+class HomeView(TemplateView):
+    form_class = AuthenticationForm
+    template_name = 'login.html'
 
-        if form.is_valid():
-            login(request, form.get_user())
+    def get(self, request):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        else:
+            return render(request, self.template_name, {
+                'form': self.form_class()
+            })
 
-            return HttpResponseRedirect('/projects/')
-    else:
-        form = AuthenticationForm()
+    def post(self, request):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+        else:
+            form = self.form_class(data=request.POST)
 
-    return render(request, 'login.html', {'form': form})
+            if form.is_valid():
+                login(request, form.get_user())
+
+                return HttpResponseRedirect(reverse('projects.index'))
+            else:
+                return render(request, self.template_name, {
+                    'form': form
+                })
 
 
-@login_required
-def do_logout(request):
-    logout(request)
+class LogoutView(TemplateView):
+    @method_decorator(login_required)
+    def get(self, request):
+        logout(request)
 
-    return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
