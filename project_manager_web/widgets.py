@@ -5,7 +5,7 @@ from django.utils.encoding import force_text
 from django.utils.html import format_html
 
 
-class CustomVueDatePickerInput(Widget):
+class CustomDatePickerInput(Widget):
     """
     Base class for all <input> widgets (except type='checkbox' and
     type='radio', which are special).

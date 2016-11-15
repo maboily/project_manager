@@ -3,13 +3,17 @@ from django.forms import models
 
 from project_manager_web.models import Project, ProjectProgress
 from project_manager_web.search.search_helper import SearchHelper
-from project_manager_web.widgets import CustomVueDatePickerInput
+from project_manager_web.widgets import CustomDatePickerInput
 
 
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['name', 'description', 'status', 'start_date', 'end_date']
+        widgets = {
+            'start_date': CustomDatePickerInput(),
+            'end_date': CustomDatePickerInput()
+        }
 
 
 class ProjectProgressForm(forms.ModelForm):
@@ -17,7 +21,7 @@ class ProjectProgressForm(forms.ModelForm):
         model = ProjectProgress
         fields = ['notification_text', 'date']
         widgets = {
-            "date": CustomVueDatePickerInput()
+            'date': CustomDatePickerInput()
         }
 
 
