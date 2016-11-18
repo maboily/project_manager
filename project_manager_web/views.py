@@ -178,7 +178,7 @@ def search_project(request):
         form = SearchForm(request.GET)
 
         helper_instance = SearchHelper(search_for=form.data['search_text'], search_in=form.data['search_in'])
-        results_list = helper_instance.find_results()
+        results_list = helper_instance.find_results
 
         paginator = Paginator(results_list, 10)
         page = request.GET.get('search_page')

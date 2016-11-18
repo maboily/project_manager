@@ -1,3 +1,6 @@
+from django.db.models import Count, CharField
+from django.db.models import Value, IntegerField
+
 from project_manager_web.models import Project
 
 
@@ -20,6 +23,7 @@ class SearchHelper:
         self.search_for = search_for
         self.search_in = search_in.split('+')
 
+    @property
     def find_results(self):
         results = None
 
