@@ -10,7 +10,9 @@ class SearchHelper:
     SEARCH_IN_CHOICES = (
         ('name', 'Name'),
         ('description', 'Description'),
-        ('name+description', 'Name and descriptions')
+        ('progresses', 'Project Progresses'),
+        ('name+description', 'Name and descriptions'),
+        ('name+description+progresses', 'All')
     )
 
     def __init__(self, search_for, search_in):
@@ -19,7 +21,6 @@ class SearchHelper:
         self.search_in = search_in.split('+')
 
     def find_results(self):
-        search_keywords = {}
         results = None
 
         # Name search
@@ -36,4 +37,11 @@ class SearchHelper:
             else:
                 results |= Project.objects.filter(description__icontains=self.search_for)
 
-        return results.all()
+        # Progresses search
+        if 'progresses' in self.search_in:
+            if results is None:
+                results = Project.objects.filter(projectprogress__notification_text__icontains=self.search_for)
+            else:
+                results |= Project.objects.filter(projectprogress__notification_text__icontains=self.search_for)
+
+        return results.all().values('name', 'description', 'id').distinct()
